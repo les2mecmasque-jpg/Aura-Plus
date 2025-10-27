@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Aura Plus - Accueil</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+    <!-- Icônes Font Awesome pour réseaux sociaux -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #181818;
+            color: #ededed;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 5vw 14px 5vw;
+            background: #181818f2;
+            border-bottom: 1px solid #232323;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .logo img {
+            height: 62px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 2px 8px #000c);
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+        nav a {
+            color: #ededed;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+            position: relative;
+            padding: 3px 0;
+        }
+        nav a::after {
+            content:'';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #ededed;
+            transition: width 0.25s;
+            margin-top: 2px;
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        nav a:hover, nav a.active {
+            color: #fff;
+        }
+
+        /* Carousel Styles for 4 images */
+        .carousel-container {
+            width: 100vw;
+            max-width: 100vw;
+            overflow: hidden;
+            margin: 0 auto 32px auto;
+            border-radius: 14px;
+            box-shadow: 0 4px 22px #0005;
+            background: #111;
+        }
+        .carousel {
+            display: flex;
+            width: 400vw;
+            animation: defilement 20s infinite linear;
+        }
+        .carousel img {
+            width: 100vw;
+            height: 270px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        @keyframes defilement {
+            0%   { transform: translateX(0); }
+            24%  { transform: translateX(0); }
+            26%  { transform: translateX(-100vw); }
+            49%  { transform: translateX(-100vw); }
+            51%  { transform: translateX(-200vw); }
+            74%  { transform: translateX(-200vw); }
+            76%  { transform: translateX(-300vw); }
+            100% { transform: translateX(-300vw); }
+        }
+        @media (max-width: 700px){
+            .carousel img { height: 120px;}
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(120deg, #232323 60%, #111 100%);
+            text-align: center;
+            padding: 70px 0 40px 0;
+            position: relative;
+        }
+        .hero-img {
+            display: none;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            color: #ededed;
+            margin-bottom: 18px;
+            letter-spacing: 2px;
+        }
+        .hero p {
+            color: #cfcfcf;
+            font-size: 1.22rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        .cta-btn {
+            display: inline-block;
+            padding: 16px 42px;
+            background: transparent;
+            color: #ededed;
+            border: 2px solid #ededed;
+            border-radius: 8px;
+            font-size: 1.18rem;
+            text-decoration: none;
+            transition: background 0.25s, color 0.25s;
+            margin-top: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .cta-btn:hover {
+            background: #ededed;
+            color: #181818;
+        }
+
+        /* UNIVERS */
+        .univers-section {
+            background: #232323;
+            margin: 48px 0 32px 0;
+            padding: 36px 7vw 28px 7vw;
+            border-radius: 10px;
+            box-shadow: 0 2px 16px #0002;
+            text-align: center;
+        }
+        .univers-section h2 {
+            font-size: 1.6rem;
+            letter-spacing: 1.5px;
+            color: #ededed;
+            margin-bottom: 16px;
+        }
+        .univers-section p {
+            color: #bdbdbd;
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* VALEURS */
+        .values-section {
+            background: #232323;
+            margin: 50px 0 30px 0;
+            padding: 36px 6vw 24px 6vw;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0003;
+            color: #ededed;
+            text-align: center;
+        }
+        .values-section h2 {
+            font-size: 1.6rem;
+            letter-spacing: 1.5px;
+            color: #ededed;
+            margin-bottom: 18px;
+        }
+        .values-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 26px;
+            margin-top: 18px;
+        }
+        .value-card {
+            background: #181818;
+            border-radius: 8px;
+            padding: 18px 30px;
+            min-width: 210px;
+            max-width: 320px;
+            box-shadow: 0 0 8px #0002;
+            text-align: center;
+        }
+        .value-card h3 {
+            color: #ededed;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+        .value-card p {
+            color: #bdbdbd;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* PRODUITS */
+        .products-section {
+            margin: 50px 0 30px 0;
+            text-align: center;
+        }
+        .products-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 22px;
+            color: #ededed;
+        }
+        .phare-products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 34px;
+        }
+        .phare-card {
+            background: #222;
+            border-radius: 10px;
+            padding: 14px 10px 18px 10px;
+            box-shadow: 0 2px 10px #00000033;
+            width: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s;
+            text-decoration: none;
+        }
+        .phare-card:hover {
+            box-shadow: 0 4px 24px #00000077;
+        }
+        .phare-card img {
+            width: 90%;
+            border-radius: 7px;
+            margin-bottom: 14px;
+        }
+        .phare-card h4 {
+            color: #ededed;
+            font-size: 1.08rem;
+            margin: 0 0 4px 0;
+        }
+        .phare-card .price {
+            color: #aaa;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .phare-card .see-btn {
+            background: #333;
+            color: #ededed;
+            border: none;
+            border-radius: 5px;
+            padding: 7px 16px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 7px;
+        }
+        .phare-card .see-btn:hover {
+            background: #444;
+        }
+
+        /* RESEAUX */
+        .insta-section {
+            background: #181818;
+            margin: 40px 0 0 0;
+            padding: 30px 0 18px 0;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .insta-section h2 {
+            font-size: 1.2rem;
+            color: #ededed;
+            margin-bottom: 8px;
+        }
+        .insta-icons {
+            margin-top: 10px;
+            font-size: 2rem;
+        }
+        .insta-icons a {
+            color: #ededed;
+            margin: 0 14px;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+        .insta-icons a:hover {
+            color: #888;
+        }
+
+        /* NEWSLETTER */
+        .newsletter-section {
+            background: #232323;
+            margin: 40px 0 0 0;
+            padding: 26px 0 18px 0;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0003;
+        }
+        .newsletter-section h2 {
+            font-size: 1.2rem;
+            color: #ededed;
+            margin-bottom: 8px;
+        }
+        .newsletter-section form {
+            margin-top: 12px;
+        }
+        .newsletter-section input[type="email"],
+        .newsletter-section input[name="surnom"] {
+            padding: 9px;
+            border-radius: 4px;
+            border: none;
+            width: 230px;
+            background: #181818;
+            color: #ededed;
+            margin-right: 12px;
+            font-size: 1rem;
+            border: 1px solid #444;
+        }
+        .newsletter-section button {
+            padding: 9px 22px;
+            border-radius: 4px;
+            border: none;
+            background: #333;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .newsletter-section button:hover {
+            background: #444;
+        }
+
+        /* STORYTELLING MODAL APRES CONTACT */
+        .story-btn-section {
+            background: #232323;
+            color: #ededed;
+            border: none;
+            outline: none;
+            border-radius: 30px;
+            box-shadow: 0 2px 12px #000a;
+            padding: 14px 28px 14px 20px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .story-btn-section:hover {
+            background: #ededed;
+            color: #181818;
+        }
+        .story-modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: #000b;
+            backdrop-filter: blur(2px);
+        }
+        .story-modal-bg.active {
+            display: block;
+        }
+        .story-modal {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #232323;
+            color: #ededed;
+            border-radius: 18px;
+            padding: 38px 28px 30px 28px;
+            max-width: 400px;
+            width: 90vw;
+            box-shadow: 0 4px 32px #000d;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+        .story-modal h2 {
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .story-modal p {
+            font-size: 1.08rem;
+            line-height: 1.6;
+            color: #cfcfcf;
+            margin-bottom: 0;
+        }
+        .story-close {
+            position: absolute;
+            top: 12px; right: 16px;
+            background: none;
+            color: #888;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .story-close:hover {
+            color: #fff;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%);}
+            to   { opacity: 1; transform: translate(-50%, -50%);}
+        }
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 2vw 10px 2vw;
+            }
+            nav {
+                gap: 18px;
+            }
+            .values-list,
+            .phare-products {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .value-card,
+            .phare-card {
+                min-width: unset;
+                max-width: unset;
+                width: 96%;
+            }
+            .story-modal { padding: 25px 7vw 18px 7vw;}
+            .story-btn-section { padding: 10px 16px;}
+            .newsletter-section input[type="email"],
+            .newsletter-section input[name="surnom"] {
+                display: block;
+                width: calc(100% - 40px);
+                margin: 8px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo Aura Plus">
+        </div>
+        <nav>
+            <a href="index.html" class="active">Accueil</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="panier.html">Panier</a>
+            <a href="crew.html">Crew</a>
+        </nav>
+    </header>
+    <main>
+        <!-- CAROUSEL (4 images, 5s/image, 20s boucle totale) -->
+        <div class="carousel-container">
+            <div class="carousel">
+                <img src="Senegal.jpg" alt="Slide 1">
+                <img src="Cote divoire.jpg" alt="Slide 2">
+                <img src="Mauritanie.jpg" alt="Slide 3">
+                <img src="France.jpg" alt="Slide 4">
+            </div>
+        </div>
+
+        <!-- HERO -->
+        <section class="hero">
+            <h1>L’élégance urbaine, simplement.</h1>
+            <p>
+                Bienvenue chez Aura Plus.<br>
+                La rencontre entre l’esprit urbain et le raffinement moderne.<br>
+                Découvrez des pièces intemporelles, pensées pour sublimer chaque instant de votre quotidien.<br>
+                Qualité, style, simplicité – révélez le meilleur de vous-même.
+            </p>
+            <a href="catalogue.html" class="cta-btn">Découvrir la collection</a>
+        </section>
+
+        <!-- UNIVERS -->
+        <section class="univers-section">
+            <h2>Notre univers</h2>
+            <p>
+                Aura Plus puise son inspiration au cœur des villes et de leur énergie. Nos collections sont conçues pour celles et ceux qui souhaitent allier authenticité, élégance et confort au quotidien.<br><br>
+                Chaque pièce incarne notre vision : des matières soigneusement choisies, des coupes actuelles, une fabrication responsable et locale.<br>
+                Rejoignez la communauté Aura Plus et affirmez votre style, en toute simplicité.
+            </p>
+        </section>
+
+        <!-- VALEURS -->
+        <section class="values-section">
+            <h2>Nos valeurs</h2>
+            <div class="values-list">
+                <div class="value-card">
+                    <h3><i class="fa-solid fa-star"></i> Excellence</h3>
+                    <p>Des matières premium et un savoir-faire exigeant, pour des vêtements qui durent.</p>
+                </div>
+                <div class="value-card">
+                    <h3><i class="fa-solid fa-leaf"></i> Responsabilité</h3>
+                    <p>Production locale, choix éthiques, engagement pour un impact positif.</p>
+                </div>
+                <div class="value-card">
+                    <h3><i class="fa-solid fa-shirt"></i> Style intemporel</h3>
+                    <p>Des collections qui traversent les saisons, pensées pour s’adapter à toutes vos envies.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUITS PHARES -->
+        <section class="products-section">
+            <h2>Nouveautés & coups de cœur</h2>
+            <div class="phare-products">
+                <a href="produit.html?id=2" class="phare-card">
+                    <img src="https://images.unsplash.com/photo-1526178613658-3b642d1b6852?auto=format&fit=crop&w=400&q=80"
+                        alt="T-shirt Aura Noir">
+                    <h4>T-shirt Aura Noir</h4>
+                    <div class="price">28 €</div>
+                    <button class="see-btn">Voir le produit</button>
+                </a>
+                <a href="produit.html?id=5" class="phare-card">
+                    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+                        alt="Sweatshirt Zippé Aura">
+                    <h4>Sweatshirt Zippé Aura</h4>
+                    <div class="price">48 €</div>
+                    <button class="see-btn">Voir le produit</button>
+                </a>
+                <a href="produit.html?id=7" class="phare-card">
+                    <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80"
+                        alt="Bonnet Urban Gris">
+                    <h4>Bonnet Urban Gris</h4>
+                    <div class="price">22 €</div>
+                    <button class="see-btn">Voir le produit</button>
+                </a>
+            </div>
+        </section>
+
+        <!-- INSTAGRAM & RESEAUX -->
+        <section class="insta-section">
+            <h2>Suivez-nous sur les réseaux</h2>
+            <div class="insta-icons">
+                <a href="https://www.instagram.com/auuura.01?igsh=ZDgwMnUyY29zNXV5" title="Instagram" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@auuura.plus01?_t=ZM-90lElusdRBw&_r=1" title="TikTok" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="https://www.snapchat.com/add/aura.plus01?share_id=1bZrrY6jbC0&locale=fr-FR" title="Snapchat" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-snapchat-ghost"></i>
+                </a>
+            </div>
+            <p style="color:#aaa; margin-top:10px;font-size:0.96rem;">
+                #BrilleToujoursPlus sur Instagram pour être republié !
+            </p>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section class="newsletter-section">
+            <h2>Restez informé(e) !</h2>
+            <form id="newsletterForm" action="https://formspree.io/f/xqayozwp" method="POST">
+                <input type="text" name="surnom" placeholder="Surnom" autocomplete="nickname">
+                <input type="email" name="email" placeholder="Votre e-mail" required autocomplete="email">
+                <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Aura Plus">
+                <input type="hidden" name="_language" value="fr">
+                <!-- <input type="hidden" name="_next" value="https://votresite.com/merci.html"> -->
+                <button type="submit">S'inscrire</button>
+            </form>
+            <p style="color:#888; margin-top:12px; font-size:0.96rem;">Promis, pas de spam, juste le meilleur d’Aura
+                Plus.</p>
+        </section>
+
+        <!-- STORYTELLING BUTTON SOUS CONTACT -->
+        <div style="text-align:center; margin:32px 0 0 0;">
+            <button class="story-btn-section" id="openStoryModal">
+                <i class="fa-solid fa-book-open"></i> Découvrir notre story
+            </button>
+        </div>
+
+        <!-- STORY MODAL -->
+        <div class="story-modal-bg" id="storyModalBg">
+            <div class="story-modal">
+                <button class="story-close" id="closeStoryModal" title="Fermer">&times;</button>
+                <h2>Notre Histoire</h2>
+                <p>
+                    Aura Plus est née d’une passion pour le style urbain et la volonté de bousculer les codes du streetwear.<br><br>
+                    Nous croyons qu’élégance et simplicité peuvent aller de pair. Depuis nos débuts, nous créons des pièces uniques, pensées pour durer, et pour révéler la personnalité de chacun.<br><br>
+                    Chaque collection puise son inspiration dans l’énergie des villes, la diversité de leurs habitants et l’envie d’exprimer qui l’on est… sans jamais trahir nos valeurs d’authenticité et de respect.<br><br>
+                    Bienvenue dans l’univers Aura Plus.
+                </p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 Aura Plus. Tous droits réservés.
+    </footer>
+    <script>
+        const openBtn = document.getElementById('openStoryModal');
+        const closeBtn = document.getElementById('closeStoryModal');
+        const modalBg = document.getElementById('storyModalBg');
+
+        openBtn.addEventListener('click', () => {
+            modalBg.classList.add('active');
+        });
+        closeBtn.addEventListener('click', () => {
+            modalBg.classList.remove('active');
+        });
+        // Fermer la modal si clic en dehors
+        modalBg.addEventListener('click', e => {
+            if (e.target === modalBg) modalBg.classList.remove('active');
+        });
+        // Fermer avec la touche Esc
+        window.addEventListener('keydown', e => {
+            if (e.key === "Escape") modalBg.classList.remove('active');
+        });
+
+        // Newsletter form submit via Formspree (AJAX) to stay on the page and show messages
+        (function() {
+            const form = document.getElementById('newsletterForm');
+            if (!form) return;
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const endpoint = form.action;
+                const formData = new FormData(form);
+
+                try {
+                    const res = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+
+                    if (res.ok) {
+                        alert('Merci pour votre inscription ! Vous recevrez bientôt nos nouveautés.');
+                        form.reset();
+                    } else {
+                        const data = await res.json().catch(() => ({}));
+                        if (data && data.errors) {
+                            alert('Erreur : ' + data.errors.map(err => err.message).join(', '));
+                        } else {
+                            alert('Une erreur est survenue lors de l\'envoi. Réessayez plus tard.');
+                        }
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Impossible de contacter le serveur. Vérifiez votre connexion.');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

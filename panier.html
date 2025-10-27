@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Aura Plus - Panier</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Spécifique à la page panier, hors header */
+    .panier-section {
+      max-width: 600px;
+      margin: 40px auto 0 auto;
+      background: #232323;
+      border-radius: 14px;
+      box-shadow: 0 2px 18px #0003;
+      padding: 32px 24px 24px 24px;
+      color: #ededed;
+    }
+    .panier-section h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 26px;
+      letter-spacing: 1px;
+    }
+    .panier-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .panier-item {
+      display: flex;
+      align-items: center;
+      background: #181818;
+      border-radius: 8px;
+      box-shadow: 0 1px 8px #0002;
+      padding: 10px 16px;
+      gap: 16px;
+      position: relative;
+      transition: opacity 0.3s;
+    }
+    .panier-item img {
+      width: 68px;
+      height: 68px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .panier-info {
+      flex: 1;
+    }
+    .panier-info h2 {
+      font-size: 1.1rem;
+      margin: 0 0 6px 0;
+    }
+    .panier-qty, .panier-price {
+      display: inline-block;
+      margin-right: 16px;
+      color: #bdbdbd;
+      font-size: 0.98rem;
+    }
+    .panier-remove {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .panier-remove:hover {
+      color: #ff5c5c;
+    }
+    .panier-summary {
+      background: #181818;
+      border-radius: 8px;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.15rem;
+      margin-top: 8px;
+    }
+    .total-amount {
+      font-weight: bold;
+      color: #fff;
+      font-size: 1.2rem;
+    }
+    .valider-btn {
+      background: #ededed;
+      color: #181818;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 28px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .valider-btn:hover {
+      background: #444;
+      color: #fff;
+    }
+    .panier-empty {
+      max-width: 480px;
+      margin: 70px auto 0 auto;
+      background: #232323;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px #0002;
+      padding: 38px 20px 24px 20px;
+      text-align: center;
+      color: #ededed;
+    }
+    .panier-empty h2 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    .panier-empty a {
+      color: #ededed;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .confirmation-msg {
+      text-align: center;
+      background: #222;
+      color: #ededed;
+      border-radius: 8px;
+      margin: 32px auto 0 auto;
+      padding: 24px 18px;
+      max-width: 420px;
+      font-size: 1.15rem;
+      box-shadow: 0 2px 12px #0004;
+    }
+    footer {
+      text-align: center;
+      padding: 22px 0 12px 0;
+      color: #888;
+      background: #181818;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      margin-top: 38px;
+    }
+    @media (max-width: 700px) {
+      .panier-section {
+        padding: 15vw 4vw 6vw 4vw;
+      }
+      .panier-item img {
+        width: 54px;
+        height: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Logo Aura Plus">
+    </div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="catalogue.html">Catalogue</a>
+      <a href="panier.html" class="active">Panier</a>
+      <a href="crew.html">Crew</a>
+    </nav>
+  </header>
+  <main id="panier-main">
+    <!-- Le panier dynamique s'affiche ici grâce au script JS ci-dessous -->
+  </main>
+  <footer>
+    &copy; 2025 Aura Plus. Tous droits réservés.
+  </footer>
+  <script>
+    // --- PANIER DYNAMIQUE EN LOCALSTORAGE ---
+
+    function getPanier() {
+      return JSON.parse(localStorage.getItem("panierAuraPlus") || "[]");
+    }
+    function savePanier(panier) {
+      localStorage.setItem("panierAuraPlus", JSON.stringify(panier));
+    }
+
+    function affichePanier() {
+      const main = document.getElementById('panier-main');
+      const panier = getPanier();
+
+      // Si validation, affiche confirmation
+      if (window.location.hash === "#confirmation") {
+        main.innerHTML = `
+          <div class="confirmation-msg">
+            <i class="fa-solid fa-circle-check" style="color:#5fd17e;font-size:2.2rem;"></i><br>
+            <strong>Merci pour votre commande&nbsp;!</strong><br>
+            Nous la traitons avec soin.<br>
+            <a href="catalogue.html" style="color:#ededed;display:inline-block;margin-top:18px;text-decoration:underline;">Retour au catalogue</a>
+          </div>
+        `;
+        return;
+      }
+
+      if (!panier.length) {
+        main.innerHTML = `
+          <section class="panier-empty">
+            <h2>Votre panier est vide</h2>
+            <p>Parcourez notre <a href="catalogue.html">catalogue</a> pour découvrir nos collections.</p>
+          </section>
+        `;
+        return;
+      }
+
+      let html = `
+        <section class="panier-section">
+          <h1>Votre panier</h1>
+          <div class="panier-list">
+      `;
+      panier.forEach((item, idx) => {
+        html += `
+          <div class="panier-item" data-idx="${idx}">
+            <img src="${item.image}" alt="${item.nom}">
+            <div class="panier-info">
+              <h2>${item.nom}</h2>
+              <span class="panier-qty">Quantité : ${item.quantite}</span>
+              <span class="panier-price">${item.prix} €</span>
+            </div>
+            <button class="panier-remove" title="Retirer l'article"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        `;
+      });
+      html += `
+          </div>
+          <div class="panier-summary">
+            <div>Total : <span class="total-amount">${panier.reduce((sum, it) => sum + it.prix * it.quantite, 0)} €</span></div>
+            <button class="valider-btn" id="validerCommande">Valider ma commande</button>
+          </div>
+        </section>
+      `;
+      main.innerHTML = html;
+
+      // Suppression d'article
+      main.querySelectorAll('.panier-remove').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const idx = parseInt(this.closest('.panier-item').dataset.idx);
+          panier.splice(idx, 1);
+          savePanier(panier);
+          affichePanier();
+        });
+      });
+
+      // Validation de commande
+      const validerBtn = document.getElementById('validerCommande');
+      if (validerBtn) {
+        validerBtn.addEventListener('click', function() {
+          // Vider le panier et afficher confirmation
+          savePanier([]);
+          window.location.hash = "#confirmation";
+          affichePanier();
+        });
+      }
+    }
+
+    // Initialisation panier au chargement
+    affichePanier();
+    // Pour permettre l'appel d'affichePanier() après ajout d'article depuis d'autres pages
+    window.addEventListener("storage", function(e){
+      if (e.key === "panierAuraPlus") affichePanier();
+    });
+  </script>
+</body>
+</html>

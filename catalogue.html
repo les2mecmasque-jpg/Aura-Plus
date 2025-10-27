@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Aura Plus - Catalogue</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Spécifique catalogue uniquement */
+        #category-filter {
+            margin-left: 10px;
+        }
+        .product-card {
+            transition: opacity 0.2s;
+        }
+        .catalogue-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .product-card {
+            background: #232323;
+            border-radius: 12px;
+            box-shadow: 0 2px 14px #0003;
+            padding: 18px 18px 18px 18px;
+            color: #ededed;
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .product-card img {
+            width: 90%;
+            max-width: 185px;
+            border-radius: 9px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 8px #0002;
+        }
+        .product-card h3 {
+            margin: 8px 0 5px 0;
+            font-size: 1.13rem;
+            font-weight: 600;
+        }
+        .product-card p {
+            font-size: 0.97rem;
+            color: #bdbdbd;
+            margin: 0 0 7px 0;
+        }
+        .product-card .price {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 7px;
+            font-size: 1.03rem;
+        }
+        .product-card button,
+        .product-card a button {
+            margin: 4px 0 0 0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            background: #333;
+            color: #ededed;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            margin-right: 6px;
+        }
+        .product-card button:hover,
+        .product-card a button:hover {
+            background: #ededed;
+            color: #181818;
+        }
+        .added-feedback {
+            color: #5fd17e;
+            font-size: 0.96rem;
+            margin-top: 6px;
+            transition: opacity 0.5s;
+            opacity: 1;
+        }
+        .fadeout {
+            opacity: 0 !important;
+        }
+        @media (max-width: 800px) {
+            .catalogue-grid {
+                gap: 14px;
+            }
+            .product-card {
+                width: 95vw;
+                max-width: 340px;
+            }
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 30px 0 18px 0;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo Aura Plus">
+        </div>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="catalogue.html" class="active">Catalogue</a>
+            <a href="panier.html">Panier</a>
+            <a href="crew.html">Crew</a>
+        </nav>
+    </header>
+    <main>
+        <h1 class="section-title">Catalogue</h1>
+        <div style="margin-bottom:24px;">
+            <label for="category-filter" style="font-weight:bold;">Filtrer par catégorie&nbsp;:</label>
+            <select id="category-filter">
+                <option value="all">Toutes</option>
+                <option value="T-shirt">T-shirt</option>
+                <option value="Sweatshirt">Sweatshirt</option>
+                <option value="Bonnet">Bonnet</option>
+            </select>
+        </div>
+        <div class="catalogue-grid" id="catalogue-grid"></div>
+    </main>
+    <footer>
+        &copy; 2025 Aura Plus. Tous droits réservés.
+    </footer>
+    <script>
+        // --- Catalogue dynamique ---
+        const produits = [
+            {
+                id: 1,
+                nom: "T-shirt Classique Gris",
+                description: "T-shirt gris, coupe droite, 100% coton premium.",
+                prix: 25,
+                image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+                categorie: "T-shirt"
+            },
+            {
+                id: 2,
+                nom: "T-shirt Aura Noir",
+                description: "T-shirt noir, logo Aura Plus brodé, style épuré.",
+                prix: 28,
+                image: "https://images.unsplash.com/photo-1526178613658-3b642d1b6852?auto=format&fit=crop&w=400&q=80",
+                categorie: "T-shirt"
+            },
+            {
+                id: 3,
+                nom: "Sweatshirt Crewneck Noir",
+                description: "Sweatshirt noir, col rond, molleton doux intérieur.",
+                prix: 45,
+                image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+                categorie: "Sweatshirt"
+            },
+            {
+                id: 4,
+                nom: "Sweatshirt Gris Clair",
+                description: "Sweatshirt gris clair, coupe relax, logo poitrine discret.",
+                prix: 42,
+                image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+                categorie: "Sweatshirt"
+            },
+            {
+                id: 5,
+                nom: "Sweatshirt Zippé Aura",
+                description: "Sweatshirt zippé gris foncé, capuche ajustable, finitions premium.",
+                prix: 48,
+                image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+                categorie: "Sweatshirt"
+            },
+            {
+                id: 6,
+                nom: "Bonnet Côtelé Noir",
+                description: "Bonnet noir, maille épaisse, étiquette Aura Plus.",
+                prix: 20,
+                image: "https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=400&q=80",
+                categorie: "Bonnet"
+            },
+            {
+                id: 7,
+                nom: "Bonnet Urban Gris",
+                description: "Bonnet gris, style urbain, chaud et confortable.",
+                prix: 22,
+                image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80",
+                categorie: "Bonnet"
+            }
+        ];
+
+        function renderCatalogue(category = "all") {
+            const grid = document.getElementById('catalogue-grid');
+            grid.innerHTML = '';
+            const filtres = category === 'all' ? produits : produits.filter(p => p.categorie === category);
+            if (filtres.length === 0) {
+                grid.innerHTML = `<div style="color:#aaa;font-size:1.1rem;text-align:center;">Aucun produit dans cette catégorie.</div>`;
+                return;
+            }
+            filtres.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-id', prod.id);
+                card.innerHTML = `
+          <img src="${prod.image}" alt="${prod.nom}">
+          <h3>${prod.nom}</h3>
+          <p>${prod.description}</p>
+          <div class="price">${prod.prix} €</div>
+          <a href="produit.html?id=${prod.id}"><button>Voir</button></a>
+          <button class="add-to-cart-btn" data-id="${prod.id}"><i class="fa-solid fa-cart-plus"></i> Ajouter au panier</button>
+          <div class="added-feedback" style="display:none;">Ajouté au panier <i class="fa-solid fa-check"></i></div>
+        `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- Gestion Panier ---
+        function getPanier() {
+            return JSON.parse(localStorage.getItem("panierAuraPlus") || "[]");
+        }
+        function savePanier(panier) {
+            localStorage.setItem("panierAuraPlus", JSON.stringify(panier));
+        }
+        function ajouterAuPanier(id) {
+            const prod = produits.find(p => p.id === id);
+            if (!prod) return;
+            let panier = getPanier();
+            let exist = panier.find(item => item.id === id);
+            if (exist) {
+                exist.quantite += 1;
+            } else {
+                panier.push({
+                    id: prod.id,
+                    nom: prod.nom,
+                    prix: prod.prix,
+                    quantite: 1,
+                    image: prod.image
+                });
+            }
+            savePanier(panier);
+        }
+
+        // --- Gestion des événements ---
+        function bindBtns() {
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.onclick = function () {
+                    const id = parseInt(this.dataset.id);
+                    ajouterAuPanier(id);
+                    // Feedback visuel
+                    const feedback = this.parentElement.querySelector('.added-feedback');
+                    if (feedback) {
+                        feedback.style.display = 'block';
+                        feedback.classList.remove('fadeout');
+                        setTimeout(() => {
+                            feedback.classList.add('fadeout');
+                            setTimeout(() => feedback.style.display = 'none', 400);
+                        }, 1100);
+                    }
+                }
+            });
+        }
+
+        // --- Filtre Catégorie dynamique ---
+        document.getElementById('category-filter').addEventListener('change', function () {
+            renderCatalogue(this.value);
+            setTimeout(bindBtns, 20);
+        });
+
+        // --- Initialisation ---
+        window.onload = function () {
+            renderCatalogue();
+            setTimeout(bindBtns, 20);
+        }
+    </script>
+</body>
+
+</html>

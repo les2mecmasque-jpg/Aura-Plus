@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Aura Plus - Crew</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+    <!-- Icônes Font Awesome pour ambiance urbaine et réseaux -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #181818;
+            color: #ededed;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 5vw 14px 5vw;
+            background: #181818f2;
+            border-bottom: 1px solid #232323;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        .logo img {
+            height: 62px;
+            filter: drop-shadow(0 2px 8px #000c);
+        }
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+        nav a {
+            color: #ededed;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+            position: relative;
+            padding: 3px 0;
+        }
+        nav a::after {
+            content:'';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #ededed;
+            transition: width 0.25s;
+            margin-top: 2px;
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        nav a:hover, nav a.active {
+            color: #fff;
+        }
+        .crew-hero {
+            background: linear-gradient(120deg, #232323 60%, #111 100%);
+            padding: 60px 0 36px 0;
+            text-align: center;
+        }
+        .crew-hero h1 {
+            font-size: 2.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .crew-hero p {
+            color: #bdbdbd;
+            font-size: 1.18rem;
+            line-height: 1.7;
+            margin: 0 auto 18px auto;
+            max-width: 700px;
+        }
+        .join-crew-btn {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 14px 40px;
+            background: transparent;
+            color: #ededed;
+            border: 2px solid #ededed;
+            border-radius: 7px;
+            font-size: 1.13rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.25s, color 0.25s;
+        }
+        .join-crew-btn:hover {
+            background: #ededed;
+            color: #181818;
+        }
+        .crew-section {
+            margin: 50px 0 0 0;
+            padding: 0 5vw 32px 5vw;
+            text-align: center;
+        }
+        .crew-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 22px;
+            letter-spacing: 1.5px;
+            text-align: center;
+        }
+        .crew-anonymous {
+            color: #bdbdbd;
+            font-size: 1.09rem;
+            margin-bottom: 32px;
+            background: #222;
+            border-radius: 8px;
+            display: inline-block;
+            padding: 18px 28px;
+            box-shadow: 0 2px 10px #0002;
+        }
+        .crew-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 34px;
+            justify-content: center;
+        }
+        .crew-card {
+            background: #232323;
+            border-radius: 12px;
+            box-shadow: 0 2px 14px #0004;
+            width: 250px;
+            text-align: center;
+            padding: 24px 18px 20px 18px;
+            position: relative;
+        }
+        .crew-photo {
+            width: 85px;
+            height: 85px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 12px;
+            border: 3px solid #181818;
+            box-shadow: 0 2px 8px #0006;
+        }
+        .crew-card h3 {
+            color: #ededed;
+            font-size: 1.09rem;
+            margin-bottom: 5px;
+        }
+        .crew-card .crew-role {
+            color: #aaa;
+            font-size: 0.99rem;
+            margin-bottom: 9px;
+        }
+        .crew-socials {
+            margin-top: 10px;
+            font-size: 1.3rem;
+        }
+        .crew-socials a {
+            color: #ededed;
+            margin: 0 8px;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+        .crew-socials a:hover {
+            color: #888;
+        }
+        .crew-description {
+            color: #bdbdbd;
+            font-size: 0.99rem;
+            line-height: 1.45;
+            margin-top: 11px;
+        }
+        .crew-gallery-section {
+            margin: 50px 0 0 0;
+            padding: 0 5vw 32px 5vw;
+        }
+        .crew-gallery-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .crew-gallery {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .gallery-img {
+            width: 210px;
+            height: 270px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px #0004;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.04);
+        }
+        .crew-cta-section {
+            background: #232323;
+            margin: 40px 0 0 0;
+            padding: 36px 0 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #0003;
+            text-align: center;
+        }
+        .crew-cta-section h2 {
+            font-size: 1.18rem;
+            color: #ededed;
+            margin-bottom: 13px;
+        }
+        .crew-cta-section p {
+            color: #bdbdbd;
+            font-size: 1.07rem;
+            margin-bottom: 20px;
+        }
+        .crew-cta-btn {
+            padding: 12px 32px;
+            border-radius: 6px;
+            border: none;
+            background: #333;
+            color: #ededed;
+            font-size: 1.08rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .crew-cta-btn:hover {
+            background: #444;
+        }
+        .artist-call-section {
+            background: #181818;
+            margin: 50px 0 0 0;
+            padding: 38px 0 34px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 14px #0002;
+            text-align: center;
+        }
+        .artist-call-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 13px;
+            color: #ededed;
+        }
+        .artist-call-section p {
+            color: #bdbdbd;
+            font-size: 1.08rem;
+            margin-bottom: 16px;
+        }
+        .artist-call-btn {
+            padding: 12px 32px;
+            border-radius: 6px;
+            border: none;
+            background: #444;
+            color: #ededed;
+            font-size: 1.07rem;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 8px;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .artist-call-btn:hover {
+            background: #ededed;
+            color: #181818;
+        }
+        @media (max-width: 800px) {
+            .crew-list, .crew-gallery {
+                flex-direction: column;
+                align-items: center;
+            }
+            .crew-card, .gallery-img {
+                width: 98% !important;
+                max-width: 350px;
+            }
+            .crew-section, .crew-gallery-section, .artist-call-section {
+                padding: 0 2vw 18px 2vw;
+            }
+        }
+        footer {
+            margin-top: 32px;
+            padding: 16px 0;
+            background: #181818;
+            color: #888;
+            text-align: center;
+            font-size: 0.98rem;
+            border-top: 1px solid #232323;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo Aura Plus">
+        </div>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="panier.html">Panier</a>
+            <a href="crew.html" class="active">Crew</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="crew-hero">
+            <h1>Le Crew Aura Plus</h1>
+            <p>
+                Chez Aura Plus, le « Crew » c’est bien plus qu’un mot&nbsp;: c’est une famille, une vibe, une énergie.<br>
+                Notre équipe et nos ambassadeurs incarnent l’esprit urbain, la créativité, le style, et l’ouverture d’esprit.<br>
+                Découvre celles et ceux qui font rayonner la marque dans les rues, sur les réseaux, et dans la vraie vie.
+            </p>
+            <a href="https://whatsapp.com/channel/0029Vb6m66eJZg3zfPuJ8y2r" class="join-crew-btn" target="_blank" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> Rejoindre le Crew sur WhatsApp
+            </a>
+        </section>
+
+        <section class="crew-section">
+            <h2>L'équipe & Ambassadeurs</h2>
+            <div class="crew-anonymous">
+                Les créateurs préfèrent rester anonymes pour le moment.<br>
+                Mais la team s’agrandit chaque jour grâce à la communauté et aux ambassadeurs passionnés !
+            </div>
+            <div class="crew-list">
+                <div class="crew-card">
+                    <img src="https://randomuser.me/api/portraits/men/37.jpg" alt="Jules" class="crew-photo">
+                    <h3>Jules <span style="font-size:0.85em;">(aka JulesOnWheels)</span></h3>
+                    <div class="crew-role">Rider & Influenceur</div>
+                    <div class="crew-socials">
+                        <a href="https://instagram.com/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://tiktok.com/" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                    <div class="crew-description">
+                        Passionné de skate, Jules partage ses tricks et son style unique dans les spots urbains. Toujours un sourire, toujours en mouvement.
+                    </div>
+                </div>
+                <div class="crew-card">
+                    <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Maëva" class="crew-photo">
+                    <h3>Maëva</h3>
+                    <div class="crew-role">Créatrice de contenu</div>
+                    <div class="crew-socials">
+                        <a href="https://instagram.com/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://snapchat.com/" target="_blank" title="Snapchat"><i class="fa-brands fa-snapchat-ghost"></i></a>
+                    </div>
+                    <div class="crew-description">
+                        Photographe & vidéaste, Maëva capture l’essence du streetwear Aura Plus à travers des shootings créatifs et spontanés.
+                    </div>
+                </div>
+                <div class="crew-card">
+                    <img src="https://randomuser.me/api/portraits/men/43.jpg" alt="Léo" class="crew-photo">
+                    <h3>Léo</h3>
+                    <div class="crew-role">Street Artist</div>
+                    <div class="crew-socials">
+                        <a href="https://instagram.com/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                    <div class="crew-description">
+                        Entre graffs et fresques, Léo apporte la couleur et la créativité de la rue dans chaque collection capsule.
+                    </div>
+                </div>
+                <div class="crew-card">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sonia" class="crew-photo">
+                    <h3>Sonia</h3>
+                    <div class="crew-role">Community Manager</div>
+                    <div class="crew-socials">
+                        <a href="https://instagram.com/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://facebook.com/" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                    <div class="crew-description">
+                        Toujours connectée, Sonia anime la communauté Aura Plus et partage vos meilleurs looks #BrilleToujoursPlus.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="crew-gallery-section">
+            <h2>Vibes du Crew</h2>
+            <div class="crew-gallery">
+                <img src="https://images.unsplash.com/photo-1517260911102-54e1e5f4f5b4?auto=format&fit=crop&w=400&q=80" class="gallery-img" alt="Crew en action">
+                <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=400&q=80" class="gallery-img" alt="Skateboard">
+                <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" class="gallery-img" alt="Street Art">
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="gallery-img" alt="Shooting urbain">
+            </div>
+        </section>
+
+        <!-- Ajout : Appel aux artistes et collaborations -->
+        <section class="artist-call-section">
+            <h2><i class="fa-solid fa-paintbrush"></i> Appel aux artistes & collaborations</h2>
+            <p>
+                Tu es artiste, graffeur, photographe, créateur urbain, beatmaker ou simplement passionné d’art street ? <br>
+                Tu veux collaborer avec Aura Plus sur une collection capsule, un événement, une fresque ou une campagne ?<br>
+                Nous sommes ouverts à toutes les énergies créatives et projets ambitieux.<br>
+                <br>
+                Rejoins nos précédents collaborateurs pour donner vie à des créations uniques et faire vibrer la rue à ta manière.
+            </p>
+            <a href="mailto:crew@auraplus.fr?subject=Collab%20artistique%20Aura%20Plus" class="artist-call-btn">
+                <i class="fa-solid fa-envelope-open-text"></i> Proposer une collab'
+            </a>
+            <a href="https://www.instagram.com/auuura.01?igsh=MW56aWh0N3U5cTJraw==" target="_blank" class="artist-call-btn" style="margin-left:12px;" rel="noopener">
+                <i class="fa-brands fa-instagram"></i> DM sur Insta
+            </a>
+        </section>
+
+        <section class="crew-cta-section" id="rejoins">
+            <h2>Envie de rejoindre l’aventure ?</h2>
+            <p>
+                Tu partages nos valeurs ?<br>
+                Deviens ambassadeur·rice, propose tes idées de collab, ou envoie-nous tes photos et looks préférés en privé !<br>
+                <br>
+                Tag nous sur Instagram avec <span style="color:#ededed;background:#222;padding:3px 7px;border-radius:4px;">#BrilleToujoursPlus</span> pour être republié(e) ou contacte l’équipe via DM.
+            </p>
+            <a href="https://whatsapp.com/channel/0029Vb6m66eJZg3zfPuJ8y2r" target="_blank" class="crew-cta-btn" rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i> Rejoindre le Crew sur WhatsApp
+            </a>
+            <a href="https://www.instagram.com/auuura.01?igsh=MW56aWh0N3U5cTJraw==" target="_blank" class="crew-cta-btn" rel="noopener" style="margin-left:10px;">
+                <i class="fa-brands fa-instagram"></i> DM sur Insta
+            </a>
+        </section>
+    </main>
+    <footer>
+        &copy; 2025 Aura Plus. Tous droits réservés.
+    </footer>
+</body>
+</html>

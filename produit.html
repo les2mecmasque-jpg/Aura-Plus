@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Aura Plus - Détail Produit</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .produit-detail-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #232323;
+            border-radius: 16px;
+            box-shadow: 0 2px 14px #0003;
+            padding: 28px;
+            color: #ededed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .carousel-wrapper {
+            position: relative;
+            width: 80%;
+            max-width: 260px;
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .carousel-img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 1px 8px #0002;
+            user-select: none;
+            touch-action: pan-y;
+        }
+        .carousel-nav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: absolute;
+            top: 45%;
+            left: 0;
+            z-index: 2;
+        }
+        .carousel-nav button {
+            background: rgba(40,40,40,0.6);
+            color: #ededed;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .carousel-nav button:hover {
+            background: #ededed;
+            color: #232323;
+        }
+        .carousel-dots {
+            margin: 10px auto 0 auto;
+            display: flex;
+            gap: 7px;
+            justify-content: center;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #888;
+            opacity: 0.4;
+            cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .carousel-dot.active {
+            background: #5fd17e;
+            opacity: 1;
+        }
+        .produit-detail-container h2 { margin: 8px 0 10px 0; font-size: 1.5rem; font-weight: 700;}
+        .produit-detail-container .price {font-size: 1.1rem; font-weight: bold; color: #fff; margin-bottom: 12px;}
+        .produit-detail-container .category {font-size: 1rem; color: #5fd17e; margin-bottom: 4px;}
+        .produit-detail-container .description {font-size: 1.03rem; margin-bottom: 16px; color: #bdbdbd;}
+        .produit-detail-container .caracteristiques {background: #181818; border-radius: 8px; padding: 12px; margin-bottom: 14px; width: 100%; color: #ededed;}
+        .options {margin-bottom: 14px; width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 12px;}
+        .form-group {margin-bottom: 10px; width: 100%; display: flex; flex-direction: row; align-items: center; gap: 10px;}
+        .form-group label {min-width: 100px;}
+        .form-group input {flex: 1; padding: 7px; border-radius: 5px; border: 1px solid #444; background: #191919; color: #ededed;}
+        .produit-detail-container button {padding: 10px 24px; border-radius: 7px; border: none; background: #333; color: #ededed; font-size: 1.07rem; cursor: pointer; transition: background 0.2s, color 0.2s; margin-top: 10px;}
+        .produit-detail-container button:hover {background: #ededed; color: #181818;}
+        #whatsapp-order-btn {margin-left: 12px; background: #25d366; color: #fff;}
+        #whatsapp-order-btn:hover {background: #128c7e;}
+        .added-feedback {color: #5fd17e; font-size: 1.03rem; margin-top: 9px; transition: opacity 0.5s; opacity: 1;}
+        .fadeout {opacity: 0 !important;}
+        @media (max-width: 700px) {
+            .produit-detail-container {max-width: 98vw; padding: 16px;}
+            .options {flex-direction: column; gap: 8px; align-items: flex-start;}
+            .form-group {flex-direction: column; align-items: flex-start; gap: 2px;}
+            .carousel-wrapper {max-width: 98vw;}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo Aura Plus">
+        </div>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="catalogue.html">Catalogue</a>
+            <a href="panier.html">Panier</a>
+            <a href="crew.html">Crew</a>
+        </nav>
+    </header>
+    <main>
+        <div class="produit-detail-container" id="produit-detail"></div>
+    </main>
+    <footer>
+        &copy; 2025 Aura Plus. Tous droits réservés.
+    </footer>
+    <script>
+        // Chaque produit a un tableau images
+        const produits = [
+            {
+                id: 1,
+                nom: "T-shirt Classique Gris",
+                description: "T-shirt gris, coupe droite, 100% coton premium.",
+                prix: 25,
+                images: [
+                    "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+                    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80"
+                ],
+                categorie: "T-shirt",
+                caracteristiques: [
+                    "Couleur : Gris",
+                    "Matière : 100% coton premium",
+                    "Coupe : Droite",
+                    "Taille : S à XL"
+                ]
+            },
+            {
+                id: 2,
+                nom: "T-shirt Aura Noir",
+                description: "T-shirt noir, logo Aura Plus brodé, style épuré.",
+                prix: 28,
+                images: [
+                    "https://images.unsplash.com/photo-1526178613658-3b642d1b6852?auto=format&fit=crop&w=400&q=80"
+                ],
+                categorie: "T-shirt",
+                caracteristiques: [
+                    "Couleur : Noir",
+                    "Logo brodé Aura Plus",
+                    "Style : Épuré",
+                    "Taille : S à XL"
+                ]
+            },
+            {
+                id: 3,
+                nom: "Sweatshirt Crewneck Noir",
+                description: "Sweatshirt noir, col rond, molleton doux intérieur.",
+                prix: 45,
+                images: [
+                    "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+                ],
+                categorie: "Sweatshirt",
+                caracteristiques: [
+                    "Couleur : Noir",
+                    "Col rond",
+                    "Molleton doux intérieur",
+                    "Taille : S à XXL"
+                ]
+            },
+            {
+                id: 4,
+                nom: "Sweatshirt Gris Clair",
+                description: "Sweatshirt gris clair, coupe relax, logo poitrine discret.",
+                prix: 42,
+                images: [
+                    "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+                ],
+                categorie: "Sweatshirt",
+                caracteristiques: [
+                    "Couleur : Gris clair",
+                    "Coupe relax",
+                    "Logo poitrine discret",
+                    "Taille : S à XXL"
+                ]
+            },
+            {
+                id: 5,
+                nom: "Sweatshirt Zippé Aura",
+                description: "Sweatshirt zippé gris foncé, capuche ajustable, finitions premium.",
+                prix: 48,
+                images: [
+                    "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+                ],
+                categorie: "Sweatshirt",
+                caracteristiques: [
+                    "Couleur : Gris foncé",
+                    "Capuche ajustable",
+                    "Finitions premium",
+                    "Taille : S à XXL"
+                ]
+            },
+            {
+                id: 6,
+                nom: "Bonnet Côtelé Noir",
+                description: "Bonnet noir, maille épaisse, étiquette Aura Plus.",
+                prix: 20,
+                images: [
+                    "https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=400&q=80"
+                ],
+                categorie: "Bonnet",
+                caracteristiques: [
+                    "Couleur : Noir",
+                    "Maille épaisse",
+                    "Étiquette Aura Plus",
+                    "Taille unique"
+                ]
+            },
+            {
+                id: 7,
+                nom: "Bonnet Urban Gris",
+                description: "Bonnet gris, style urbain, chaud et confortable.",
+                prix: 22,
+                images: [
+                    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80"
+                ],
+                categorie: "Bonnet",
+                caracteristiques: [
+                    "Couleur : Gris",
+                    "Style urbain",
+                    "Chaud et confortable",
+                    "Taille unique"
+                ]
+            }
+        ];
+
+        // Numéros WhatsApp par pays
+        const whatsappNumbers = {
+            "CI": "22501020304", // Côte d'Ivoire
+            "SN": "221778799884", // Sénégal
+            "MR": "22232019777", // Mauritanie
+            "FR": "33612345678", // France (exemple)
+        };
+
+        // Noms lisibles des pays
+        const countryNames = {
+            "CI": "Côte d'Ivoire",
+            "SN": "Sénégal",
+            "FR": "France",
+            "MR": "Mauritanie",
+        };
+
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function getPanier() {
+            return JSON.parse(localStorage.getItem("panierAuraPlus") || "[]");
+        }
+        function savePanier(panier) {
+            localStorage.setItem("panierAuraPlus", JSON.stringify(panier));
+        }
+        function ajouterAuPanier(id, taille, quantite) {
+            const prod = produits.find(p => p.id === id);
+            if (!prod) return;
+            let panier = getPanier();
+            let exist = panier.find(item => item.id === id && item.taille === taille);
+            if (exist) {
+                exist.quantite += quantite;
+            } else {
+                panier.push({
+                    id: prod.id,
+                    nom: prod.nom,
+                    prix: prod.prix,
+                    quantite: quantite,
+                    image: prod.images[0] || "",
+                    taille: taille
+                });
+            }
+            savePanier(panier);
+        }
+
+        function renderCarousel(images) {
+            // Génère le HTML du carrousel
+            return `
+                <div class="carousel-wrapper">
+                    <div class="carousel-nav">
+                        <button id="carousel-prev" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button id="carousel-next" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <img id="carousel-img" class="carousel-img" src="${images[0]}" alt="Image produit">
+                    <div class="carousel-dots">
+                        ${images.map((_, idx) => `<span class="carousel-dot${idx===0?' active':''}" data-dot="${idx}"></span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProduitDetail() {
+            const id = parseInt(getQueryParam('id'));
+            const produit = produits.find(p => p.id === id);
+            const container = document.getElementById('produit-detail');
+            if (!produit) {
+                container.innerHTML = `<div style="color:#aaa;font-size:1.13rem;text-align:center;">Produit introuvable.</div>`;
+                return;
+            }
+
+            container.innerHTML = `
+                ${renderCarousel(produit.images)}
+                <h2>${produit.nom}</h2>
+                <div class="category">${produit.categorie}</div>
+                <div class="price">${produit.prix} €</div>
+                <div class="description">${produit.description}</div>
+                <div class="caracteristiques">
+                    <strong>Caractéristiques :</strong>
+                    <ul>
+                        ${produit.caracteristiques ? produit.caracteristiques.map(c => `<li>${c}</li>`).join('') : '<li>Aucune information supplémentaire.</li>'}
+                    </ul>
+                </div>
+                <form id="commande-form">
+                    <div class="form-group">
+                        <label for="client-nom"><strong>Nom :</strong></label>
+                        <input type="text" id="client-nom" required placeholder="Votre nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="client-ville"><strong>Ville :</strong></label>
+                        <input type="text" id="client-ville" required placeholder="Votre ville">
+                    </div>
+                    <div class="options">
+                        <label for="taille-select"><strong>Taille :</strong></label>
+                        <select id="taille-select" style="margin-left:8px;">
+                            ${(() => {
+                                if (produit.categorie === "Bonnet") return '<option value="Unique">Unique</option>';
+                                if (produit.categorie === "T-shirt" || produit.categorie === "Sweatshirt") {
+                                    return ["S", "M", "L", "XL", "XXL"].map(t => `<option value="${t}">${t}</option>`).join('');
+                                }
+                                return '<option value="Unique">Unique</option>';
+                            })()}
+                        </select>
+                        <label for="quantite-input"><strong>Quantité :</strong></label>
+                        <input type="number" id="quantite-input" min="1" value="1" style="width:55px;">
+                        <label for="pays-select"><strong>Pays :</strong></label>
+                        <select id="pays-select">
+                            <option value="CI">Côte d'Ivoire</option>
+                            <option value="SN">Sénégal</option>
+                            <option value="MR">Mauritanie</option>
+                            <option value="FR">France</option>
+                        </select>
+                    </div>
+                    <button type="button" id="add-to-cart-btn"><i class="fa-solid fa-cart-plus"></i> Ajouter au panier</button>
+                    <button type="button" id="whatsapp-order-btn" style="margin-left:12px;background:#25d366;color:#fff;">
+                        <i class="fa-brands fa-whatsapp"></i> Commander via WhatsApp
+                    </button>
+                    <div class="added-feedback" style="display:none;">Ajouté au panier <i class="fa-solid fa-check"></i></div>
+                </form>
+            `;
+
+            // Carrousel JS
+            let currentIdx = 0;
+            const images = produit.images;
+            const imgEl = document.getElementById('carousel-img');
+            const prevBtn = document.getElementById('carousel-prev');
+            const nextBtn = document.getElementById('carousel-next');
+            const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+
+            function updateCarousel(idx) {
+                if (idx < 0) idx = images.length-1;
+                if (idx >= images.length) idx = 0;
+                currentIdx = idx;
+                imgEl.src = images[idx];
+                dots.forEach((dot,i) => {
+                    dot.classList.toggle('active', i === idx);
+                });
+            }
+            prevBtn.onclick = () => updateCarousel(currentIdx-1);
+            nextBtn.onclick = () => updateCarousel(currentIdx+1);
+            dots.forEach((dot,i) => {
+                dot.onclick = () => updateCarousel(i);
+            });
+
+            // --- Swipe tactile sur mobile ---
+            let startX = null;
+            imgEl.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+            }, {passive:true});
+            imgEl.addEventListener('touchend', function(e) {
+                if (startX === null) return;
+                let endX = e.changedTouches[0].clientX;
+                let deltaX = endX - startX;
+                if (Math.abs(deltaX) > 40) { // Sensibilité du swipe
+                    if (deltaX < 0) {
+                        updateCarousel(currentIdx+1); // Swipe gauche, image suivante
+                    } else {
+                        updateCarousel(currentIdx-1); // Swipe droite, image précédente
+                    }
+                }
+                startX = null;
+            }, {passive:true});
+
+            // Ajout au panier (évènement)
+            document.getElementById('add-to-cart-btn').onclick = function () {
+                const taille = document.getElementById('taille-select').value;
+                const quantite = parseInt(document.getElementById('quantite-input').value) || 1;
+                ajouterAuPanier(id, taille, quantite);
+                const feedback = container.querySelector('.added-feedback');
+                if (feedback) {
+                    feedback.style.display = 'block';
+                    feedback.classList.remove('fadeout');
+                    setTimeout(() => {
+                        feedback.classList.add('fadeout');
+                        setTimeout(() => feedback.style.display = 'none', 400);
+                    }, 1200);
+                }
+            };
+
+            // WhatsApp commande
+            document.getElementById('whatsapp-order-btn').onclick = function () {
+                const nom = document.getElementById('client-nom').value.trim();
+                const ville = document.getElementById('client-ville').value.trim();
+                const taille = document.getElementById('taille-select').value;
+                const quantite = parseInt(document.getElementById('quantite-input').value) || 1;
+                const pays = document.getElementById('pays-select').value;
+                const numero = whatsappNumbers[pays];
+                const paysNom = countryNames[pays] || pays;
+                if (!numero) {
+                    alert("Sélectionnez un pays valide.");
+                    return;
+                }
+                if (!nom || !ville) {
+                    alert("Veuillez renseigner votre nom et votre ville.");
+                    return;
+                }
+                // Date/heure locale
+                const dateObj = new Date();
+                const dateStr = dateObj.toLocaleDateString('fr-FR');
+                const heureStr = dateObj.toLocaleTimeString('fr-FR');
+                // Calcul prix total
+                const total = produit.prix * quantite;
+                // Message WhatsApp enrichi
+                const message = encodeURIComponent(
+`Bonjour Aura Plus 👋
+
+Je souhaite passer commande sur le catalogue en ligne :
+
+- Nom du client : ${nom}
+- Ville : ${ville}
+- Produit : ${produit.nom}
+- Catégorie : ${produit.categorie}
+- Taille : ${taille}
+- Quantité : ${quantite}
+- Pays de livraison : ${paysNom}
+- Numéro du pays : +${numero}
+- Prix unitaire : ${produit.prix} €
+- Prix total : ${total} €
+- Date/heure de commande : ${dateStr} ${heureStr}
+
+Merci de me confirmer la disponibilité et le mode de paiement.`
+                );
+                // Ouvre WhatsApp avec le pré-remplissage
+                window.open(`https://wa.me/${numero}?text=${message}`, '_blank');
+            };
+        }
+
+        window.onload = function () {
+            renderProduitDetail();
+        }
+    </script>
+</body>
+</html>
